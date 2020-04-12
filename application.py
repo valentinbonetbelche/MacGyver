@@ -27,9 +27,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.MOUSEBUTTONUP:
-            if screen.handleClick(pygame.mouse.get_pos()) == 'game':
+            if screen.handle_click(pygame.mouse.get_pos()) == 'game':
                 screen.fade(screen.window)
-                game = Game.initializeGame('map.txt')
+                game = Game.initialize_game('map.txt')
     try:
         while not game.player.isDead:
             # ------------------------- GAME WINDOW ------------------------- #
@@ -49,15 +49,15 @@ while running:
             # DRAW ELEMENTS
             for row in enumerate(game.map.map_elements):
                 for cell in enumerate(row[1]):
-                    screen.displayElement(cell[0], row[0], game.map)
+                    screen.display_element(cell[0], row[0], game.map)
             # Draw player
-            screen.displayPlayer(game.player)
+            screen.display_player(game.player)
             # Draw items
             for item in game.map.items:
-                screen.displayItem(item)
+                screen.display_item(item)
             # Display Inventory
             if inventory_opened:
-                screen.displayInventory(game.player.inventory)
+                screen.display_inventory(game.player.inventory)
             pygame.display.flip()
 
     except (RuntimeError, TypeError, NameError):

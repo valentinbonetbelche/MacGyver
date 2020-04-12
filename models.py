@@ -39,10 +39,10 @@ class Player:
                 directions[direction][0],
                 directions[direction][1]):
             self.position.x, self.position.y = directions[direction][0], directions[direction][1]
-            self.checkItems(game, screen.sound)
-            self.checkExit(game, screen)
+            self.check_items(game, screen.sound)
+            self.check_exit(game, screen)
 
-    def checkItems(self, game, sound):
+    def check_items(self, game, sound):
         for item in enumerate(game.map.items):
             if item[1].position.x == self.position.x and item[1].position.y == self.position.y:
                 self.inventory.append(item[1])
@@ -50,7 +50,7 @@ class Player:
                 if sound:
                     pygame.mixer.Sound("sounds/collect_item.wav").play()
 
-    def checkExit(self, game, screen):
+    def check_exit(self, game, screen):
         if game.map.check_position(self.position.x, self.position.y) == 'E':
             self.isDead = True
             if game.map.items == []:
@@ -72,7 +72,7 @@ class Game:
         self.player = player
         self.map = map
 
-    def initializeGame(mapFile):
+    def initialize_game(mapFile):
         map = Map(mapFile)
         for row in enumerate(map.map_elements):
             for cell in enumerate(row[1]):
@@ -173,7 +173,7 @@ class Screen:
         self.state = 'main'
         self.sound = True
 
-    def handleClick(self, cursor):
+    def handle_click(self, cursor):
         if self.state == 'main':
             if 218 < cursor[0] < 456 and 207 < cursor[1] < 293:
                 self.state = 'game'
@@ -252,12 +252,12 @@ class Screen:
             pygame.display.update()
             pygame.time.delay(5)
 
-    def displayElement(self, x, y, map):
+    def display_element(self, x, y, map):
 
         self.window.blit(map.elements_ref[map.check_position(
             x, y)][1], (x * self.element_ratio, y * self.element_ratio))
 
-    def displayPlayer(self, player):
+    def display_player(self, player):
         self.window.blit(
             pygame.transform.scale(
                 pygame.image.load(
@@ -271,7 +271,7 @@ class Screen:
              player.position.y *
              self.element_ratio))
 
-    def displayItem(self, item):
+    def display_item(self, item):
         self.window.blit(
             item.image,
             (item.position.x *
@@ -279,7 +279,7 @@ class Screen:
              item.position.y *
              self.element_ratio))
 
-    def displayInventory(self, inventory):
+    def display_inventory(self, inventory):
         inventory_window_x = self.width / 2 - \
             self.inventory_menu_background.get_width() / 2
         inventory_window_y = self.height / 2 - \
